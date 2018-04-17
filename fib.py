@@ -6,6 +6,7 @@
 # Solution
 
 import sys
+import os
 
 def main():
     args = sys.argv[1:]
@@ -28,8 +29,10 @@ Usage
         print(help_message)
     elif args[0] == "approx" and len(args) == 2:
         phi_approx(int(args[1]))
-    elif args[0] == "converge" and len(args) == 1 or len(args) == 2:
+    elif args[0] == "converge" and len(args) == 1:
         phi_converge()
+    elif args[0] == "converge" and len(args) == 2:
+        phi_converge(args[1])
     else:
         print("Error: input not understood.\n" \
                 "    Type './fib.py help' for info on this program.")
@@ -74,7 +77,10 @@ def phi_converge(file_name = None):
     phi_old = phi_approx(i - 1, show_output=False)
     phi_new = phi_approx(i)
     if file_name != None:
-        f = open(file_name, "w+")
+        mode = 'a+' if os.path.exists(file_name) else 'w+'
+    with open(file_name, mode) as f:
+        print("I'm writing file now")
+        f.write('I am creating new file for lab 04')
     while phi_old != phi_new:
         i += 1
         phi_old = phi_new
