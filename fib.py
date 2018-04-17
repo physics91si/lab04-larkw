@@ -77,21 +77,21 @@ def phi_converge(file_name = None):
     phi_old = phi_approx(i - 1, show_output=False)
     phi_new = phi_approx(i)
     if file_name != None:
-        mode = 'a+' if os.path.exists(file_name) else 'w+'
-    with open(file_name, mode) as f:
-        print("I'm writing file now")
-        f.write('I am creating new file for lab 04')
-    while phi_old != phi_new:
-        i += 1
-        phi_old = phi_new
-        phi_new = phi_approx(i, show_output=False)
-        if file_name != None:
-            f.write(phi_converge_output_format.format(i, phi_new, phi_old))
-        else:
-            print(phi_converge_output_format.format(i, phi_new, phi_old))
-    if file_name != None:
-        f.write("\nConverged to %.25f" % phi_new)
+        with open(file_name, 'w') as f:
+            while phi_old != phi_new:
+                i += 1
+                phi_old = phi_new
+                phi_new = phi_approx(i, show_output=False)
+                if file_name != None:
+                    f.write(phi_converge_output_format.format(i, phi_new, phi_old))
+            f.write("\nConverged to %.25f" % phi_new)
         f.close()
-    else:
+    else: 
+        while phi_old != phi_new:
+            i += 1
+            phi_old = phi_new
+            phi_new = phi_approx(i, show_output=False)
+            print(phi_converge_output_format.format(i, phi_new, phi_old))
         print("\nConverged to %.25f" % phi_new)
-    if __name__ == '__main__': main()
+
+if __name__ == '__main__': main()
